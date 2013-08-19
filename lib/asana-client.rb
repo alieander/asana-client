@@ -35,6 +35,26 @@ module Asana
 		# concatenate array into a string
 		string = args.join " "
 
+		# help: puts some help out when it is asked for
+		if string =~ /^help$/
+			puts "
+KEYWORDS:
+	finish, help
+USAGE:
+	finish {task_id}               completes a given task
+	workspace                      lists all tasks assigned to you in
+	                                given workspace
+	workspace task name            creates a new task in given workspace
+	                                with given name
+	workspace/project              lists all tasks in the given project
+	workspace/project task name    creates a new task in given workspace/project
+	                                with given name
+TIPS:
+	@someone mentions will be parsed out as assignees
+	1/14/2014 OR 'due friday' will be parsed out as due dates"
+			exit
+		end
+
 		# finish n: complete the task with id n
 		if string =~ /^finish (\d+)$/
 			Asana::Task.finish $1
