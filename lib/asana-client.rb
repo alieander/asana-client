@@ -115,7 +115,7 @@ TIPS:
 
 		# workspace task name: create task in that workspace
 		if string =~ /^(\w+) (.+)/
-			# get corresponding workspace 
+			# get corresponding workspace
 			workspace = Asana::Workspace.find $1
 
 			# create task in workspace
@@ -126,7 +126,7 @@ TIPS:
 
 		# workspace/project task name: create task in that workspace
 		if string =~ /^(\w+)\/(\w+) (.+)/
-			# get corresponding workspace 
+			# get corresponding workspace
 			workspace = Asana::Workspace.find $1
 
 			# create task in workspace
@@ -175,7 +175,7 @@ TIPS:
 		req = type.new("#{uri.path}?#{uri.query}", header)
 		req.basic_auth @@config["api_key"], ''
 		if req.respond_to?(:set_form_data) && !data.nil?
-			req.set_form_data data 
+			req.set_form_data data
 		end
 		res = http.start { |http| http.request req	}
 
@@ -185,7 +185,7 @@ TIPS:
 
 	# get all of the users workspaces
 	def Asana.workspaces
-		spaces = self.get "workspaces" 
+		spaces = self.get "workspaces"
 		list = []
 
 		# convert array to hash indexed on workspace name
@@ -209,7 +209,7 @@ TIPS:
 		def self.find(workspace, name)
 			# if given string for workspace, convert to object
 			if workspace.is_a? String
-				workspace = Asana::Workspace.find workspace 
+				workspace = Asana::Workspace.find workspace
 			end
 
 			# check if any workspace contains the given name, and return first hit
@@ -253,23 +253,23 @@ TIPS:
 		def self.create(workspace, name, assignee = nil, due = nil)
 			# if given string for workspace, convert to object
 			if workspace.is_a? String
-				workspace = Asana::Workspace.find workspace 
+				workspace = Asana::Workspace.find workspace
 			end
 			abort "Workspace not found" unless workspace
 
 			# if assignee was given, get user
 			if !assignee.nil?
-				assignee = Asana::User.find workspace, assignee 
+				assignee = Asana::User.find workspace, assignee
 				abort "Assignee not found" unless assignee
 			end
 
 			# add task to workspace
 			params = {
-				"workspace" => workspace.id, 
+				"workspace" => workspace.id,
 				"name" => name,
 				"assignee" => (assignee.nil?) ? "me" : assignee.id
 			}
-	
+
 			# attach due date if given
 			if !due.nil?
 				params["due_on"] = due
@@ -315,7 +315,7 @@ TIPS:
 		def self.find(workspace, name)
 			# if given string for workspace, convert to object
 			if workspace.is_a? String
-				workspace = Asana::Workspace.find workspace 
+				workspace = Asana::Workspace.find workspace
 			end
 
 			# check if any workspace contains the given name, and return first hit
